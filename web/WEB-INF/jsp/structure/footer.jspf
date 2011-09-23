@@ -1,0 +1,9 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8"%>
+            </tr>
+            <tr>
+               <td><input type="submit" name="back" size="18" id="back" value="Back" /></td>
+            </tr>   
+        </table>
+    </body>
+</html>

@@ -125,6 +125,22 @@ public class HomeController {
     user.setCenter(centrum);
     userManager.add(user);
     
+    user = new UserEntity();
+    user.setActive(false);
+    user.setFirstname("Petr");
+    user.setSurname("Pavlik");
+    user.setEmail("pavlipe7@gmail.com");
+    user.setGender(GenderEntity.MALE);
+    user.setTelephoneNumber("737323111");
+    user.setPassword("heslo");
+    roles = new LinkedHashSet<UserRoleEntity>();
+    roles.add(role1);
+    roles.add(role2);
+    user.setRoleIT(roles);
+    user.setAddress(adresa);
+    user.setCenter(centrum);
+    userManager.add(user);
+    
     OfferTypeEntity type1 = new OfferTypeEntity();
     type1.setName("PRODÁM");
     type1.setDescription("Inzerát je nabízen k prodeji.");

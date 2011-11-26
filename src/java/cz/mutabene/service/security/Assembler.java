@@ -22,8 +22,19 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("assembler")
 public class Assembler {
     
+    private static Assembler instance;
+    
+    public static Assembler getInstanceIfExists() {
+        return instance;
+    }
+    
+    Assembler() {
+        //FIXME: potential leak
+        instance = this;
+    }
+    
     @Transactional(readOnly = true)
-    User buildUserFromUserEntity(UserEntity userEntity){
+    public User buildUserFromUserEntity(UserEntity userEntity){
     
     String username = userEntity.getEmail();
     String password = userEntity.getPassword();

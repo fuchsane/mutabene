@@ -19,6 +19,17 @@ import org.springframework.stereotype.Service;
  */
 @Service("userManager")
 public class UserManager extends GenericDataManager<UserEntity> {
+    
+    private static UserManager instance;
+    
+    public static UserManager getInstanceIfExists() {
+        return instance;
+    }
+    
+    UserManager() {
+        //FIXME: potential leak
+        instance = this;
+    }
 
     @Override
     public boolean add(UserEntity object) {

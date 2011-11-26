@@ -11,6 +11,7 @@ import cz.mutabene.model.entity.GenderEntity;
 import cz.mutabene.model.entity.RegionEntity;
 import cz.mutabene.model.entity.UserRoleEntity;
 import cz.mutabene.model.entity.UserEntity;
+import cz.mutabene.model.forms.registration.RegistrationFederatedValidator;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -46,6 +47,7 @@ public class RegistrationController {
     RegionManager regionManager;
 
     RegistrationValidator registrationValidator;
+    RegistrationFederatedValidator registrationFederatedValidator;
     
     @ModelAttribute(value="centersList")
     public Map<String,String> centers(){
@@ -81,6 +83,12 @@ public class RegistrationController {
         return "Account/registration";
     }
     
+    @RequestMapping(value="/registerFederated.htm", method= RequestMethod.GET)
+    public String registerFederated(RegistrationModel regModelForm, ModelMap model){     
+        model.addAttribute("regModelForm", regModelForm);
+        return "Account/registrationFederated";
+    }
+    
     @RequestMapping(value="/addUser.htm", method= RequestMethod.POST)
     public String addUser(@ModelAttribute("regModelForm") RegistrationModel regModel, BindingResult result){   
         registrationValidator.validate(regModel, result);
@@ -112,6 +120,46 @@ public class RegistrationController {
         userManager.add(user);
         return "Home/index";
     }
+    
+    @RequestMapping(value="/addUserFederated.htm", method= RequestMethod.POST)
+    public String addUserFederated(@ModelAttribute("regModelForm") RegistrationModel regModel, BindingResult result){   
+        System.out.println("CREATING FEDERATED USER");
+        registrationFederatedValidator.validate(regModel, result);
+        if(result.hasErrors()){                
+            return "Account/registrationFederated";
+        }
+        
+        AddressEntity address = regModel.getAddress();
+        
+        UserEntity user = regModel.getUser();
+        
+        CenterEntity center = centerManager.findById(Long.parseLong(regModel.getCenterId()));
+        RegionEntity region = regionManager.findById(Long.parseLong(regModel.getRegionId()));
+        address.setRegion(region);
+        addressManager.add(address);
+        
+        user.setAddress(address);
+        user.setCenter(center);
+        
+        //user.setLogin(user.getLogin().toLowerCase());
+        if("MALE".equals(regModel.getGender())){
+            user.setGender(GenderEntity.MALE);
+        } else {
+            user.setGender(GenderEntity.FEMALE);
+        }
+        
+        UserRoleEntity role = roleItManager.findById((long)1);
+       
+
+        HashSet<UserRoleEntity> userRoles = new HashSet<UserRoleEntity>();
+        userRoles.add(role);
+        user.setRoleIT(userRoles);
+
+      
+        System.out.println("this would finish the registration of federated user");
+        //userManager.add(user);
+        return "Home/index";
+    }
         
 
     public @Autowired void setAddressManager(AddressManager addressManager) {
@@ -135,6 +183,10 @@ public class RegistrationController {
     }
       public @Autowired void setValidator(RegistrationValidator validator) {
         this.registrationValidator = validator;
+      }
+      
+    public @Autowired void setFederatedValidator(RegistrationFederatedValidator validator) {
+        this.registrationFederatedValidator = validator;
       }
     
 }

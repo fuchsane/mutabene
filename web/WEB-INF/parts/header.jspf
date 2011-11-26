@@ -11,6 +11,38 @@
         <meta name="description" content="mutabene" />      
         <link rel="stylesheet" href="/BurzaMutabene/themes/style.css" type="text/css"/>
         <title>Mutabene Burza</title>
+        
+        <!-- Load Google Identity Toolkit and dependent scripts -->
+        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/googleapis/0.0.4/googleapis.min.js"></script>
+        <script type="text/javascript" src="//ajax.googleapis.com/jsapi"></script>
+        <script type="text/javascript">
+          google.load("identitytoolkit", "1.0", {packages: ["ac"]});
+        </script>
+        
+        <script type="text/javascript">
+          $(function() {
+            window.google.identitytoolkit.setConfig({
+                developerKey: "AIzaSyDD6ZJipa2LQo3MdcED2i8aThi6nQOLQno",
+                companyName: "aaa",
+                callbackUrl: "http://mutabenegoogle.cloudfoundry.com/callback",
+                realm: "",
+                userStatusUrl: "http://mutabenegoogle.cloudfoundry.com/userstatus",
+                loginUrl: "http://mutabenegoogle.cloudfoundry.com/login",
+                signupUrl: 'http://mutabenegoogle.cloudfoundry.com/signup.jsp',
+                homeUrl: 'http://mutabenegoogle.cloudfoundry.com/index.htm',
+                forgotUrl: 'http://mutabenegoogle.cloudfoundry.com/forgot.jsp',
+                language: "en",
+                idps: ["Gmail"],
+                tryFederatedFirst: true,
+                useCachedUserStatus: false
+            });
+            $("#navbar").accountChooser();
+          });
+        </script>
+        <!-- End Google Identity Toolkit -->
+        
     </head>
     <body>
         <div class="page">

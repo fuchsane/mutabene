@@ -11,6 +11,10 @@
 <%@page session="true"%>
 <h2>Přihlášení</h2>
     <p>Vyplněním následujícího formuláře se přihlásíte na MUTABENE stránky.</p>
+    
+    <!-- Insert the widget container element somewhere in the HTML page -->
+    <div id="navbar"></div>
+    
     <form action="j_spring_security_check" method="post">
         <div>
             <fieldset>

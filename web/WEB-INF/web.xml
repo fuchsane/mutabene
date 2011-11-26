@@ -53,4 +53,32 @@
     <welcome-file-list>
         <welcome-file>redirect.jsp</welcome-file>
     </welcome-file-list>
+    
+    
+    <servlet>
+        <servlet-name>Login</servlet-name>
+        <servlet-class>com.google.apps.easyconnect.easyrp.client.basic.servlet.LoginServlet</servlet-class>
+      </servlet>
+      <servlet>
+        <servlet-name>Callback</servlet-name>
+        <servlet-class>com.google.apps.easyconnect.easyrp.client.basic.servlet.CallbackServlet</servlet-class>
+      </servlet>
+      
+      <servlet-mapping>
+        <servlet-name>Login</servlet-name>
+        <url-pattern>/login</url-pattern>
+      </servlet-mapping>
+      <servlet-mapping>
+        <servlet-name>Callback</servlet-name>
+        <url-pattern>/callback</url-pattern>
+      </servlet-mapping>
+      
+
+      <listener>
+        <listener-class>
+          cz.mutabene.service.git.ContextLoader
+        </listener-class>
+      </listener>
+    
+    
 </web-app>
